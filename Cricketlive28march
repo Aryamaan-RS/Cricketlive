@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Live Stream Player</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #181818;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .live-indicator {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff0000;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            z-index: 10;
+        }
+        
+        .live-indicator::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        .video-info {
+            margin-top: 15px;
+        }
+        
+        .video-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .video-stats {
+            display: flex;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .view-count {
+            margin-right: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="video-container">
+            <div class="live-indicator">LIVE</div>
+            <div class="video-wrapper">
+                <!-- YouTube Live Embed -->
+                <iframe src="https://www.youtube.com/embed/B0-Le_ZdMnU?autoplay=1&mute=1" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen></iframe>
+            </div>
+        </div>
+        
+        <div class="video-info">
+            <h1 class="video-title">Live Stream</h1>
+            <div class="video-stats">
+                <div class="view-count">🔴 Live now</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulate live viewer count update
+        setInterval(() => {
+            const viewerCount = document.querySelector('.view-count');
+            const randomChange = Math.floor(Math.random() * 10) - 3;
+            let current = parseInt(viewerCount.textContent.match(/\d+/g)?.[0]?.replace(/,/g, '') || 100);
+            current = Math.max(1, current + randomChange);
+            viewerCount.textContent = `🔴 ${current.toLocaleString()} watching`;
+        }, 5000);
+    </script>
+</body>
+</html>
